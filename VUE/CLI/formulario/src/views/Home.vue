@@ -1,9 +1,9 @@
 <template>
-  <form>
+  <form @submit.prevent="procesarForm">
     <input type="text" 
            class="form-control my-2" 
            placeholder="Ingrese nombre"
-           v-model="tarea.nombre"
+           v-model.trim="tarea.nombre"
     >
     <div class="form-check form-check-inline">
       <input type="checkbox"
@@ -34,33 +34,33 @@
     </div>
 
     <div class="mt-2">
-      <div class="form-check form-check-inline">
-      <input type="radio"
-             class="form-check-input"
-             id="radio-1"
-             v-model="tarea.estado"
-             value="urgente"
-      >
-      <label class="form-check-label"
-             for="radio-1"
-      >
-        Urgente
-      </label>
-    </div>
+        <div class="form-check form-check-inline">
+        <input type="radio"
+              class="form-check-input"
+              id="radio-1"
+              v-model="tarea.estado"
+              value="urgente"
+        >
+        <label class="form-check-label"
+              for="radio-1"
+        >
+          Urgente
+        </label>
+      </div>
 
-    <div class="form-check form-check-inline">
-      <input type="radio"
-             class="form-check-input"
-             id="radio-2"
-             v-model="tarea.estado"
-             value="relax"
-      >
-      <label class="form-check-label"
-             for="radio-2"
-      >
-        Relax
-      </label>
-    </div>
+      <div class="form-check form-check-inline">
+        <input type="radio"
+              class="form-check-input"
+              id="radio-2"
+              v-model="tarea.estado"
+              value="relax"
+        >
+        <label class="form-check-label"
+              for="radio-2"
+        >
+          Relax
+        </label>
+      </div>
     </div>
 
     <div class="mt-2">
@@ -68,7 +68,13 @@
              class="form-control my-2"
              v-model.number="tarea.numero">
     </div>
-     
+
+    <button class="btn btn-dark mt-5 btn-block" 
+            type="submit"
+            :disabled="bloqueaBoton"
+    >
+      Procesar
+    </button>
   </form>
   <hr>
   {{ tarea }}
@@ -91,5 +97,26 @@ export default {
       }
     }
   },
+  methods:{
+    procesarForm(){
+      console.log(this.tarea)
+      if (this.tarea.nombre.trim() === "") {
+        console.error('El campo esta vacio')
+        return
+      }
+      console.log('Se guardo')
+      this.tarea = {
+        nombre: '',
+        categorias: [],
+        estado: '',
+        numero: 0
+      }
+    }
+  },
+  computed:{
+    bloqueaBoton(){
+      return this.tarea.nombre.trim() === "" ? true : false
+    }
+  }
 }
 </script>
