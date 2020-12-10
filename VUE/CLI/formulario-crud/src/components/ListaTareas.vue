@@ -14,7 +14,14 @@
     <tr v-for="item in tareas" :key="item.id">
       <th scope="row">{{ item.id }}</th>
       <td>{{ item.nombre }}</td>
-      <td>{{ item.categorias }}</td>
+      <td>
+          <span v-for="(categoria, index) in item.categorias" :key="index">
+            {{ categoria }}
+            {{
+                item.categorias.length === index + 1 ? '' : ', '
+            }}
+          </span>
+      </td>
       <td>{{ item.estado }}</td>
       <td>{{ item.numero }}</td>
       <td></td>
