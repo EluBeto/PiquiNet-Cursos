@@ -35,12 +35,23 @@ export default createStore({
     }
   },
   actions: {
-    cargarLocalstorage({commit}){
+    async cargarLocalstorage({commit}){
+      try {
+        const respuesta = await fetch('https://udemy-api-elu-default-rtdb.firebaseio.com/tareas.json')
+        const dataDB = await respuesta.json()
+        const arrayTareas = []
 
+        for (let id in dataDB) {
+          arrayTareas.push(dataDB[id])
+        }
+        commit('cargar', arrayTareas)
+      } catch (error) {
+        console.error(error)
+      }
     },
     async setTareas({commit}, tarea){
       try {
-        const res =await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${tarea.id}.json`, {
+        const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${tarea.id}.json`, {
           method:'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -49,7 +60,6 @@ export default createStore({
         })
 
         const dataDB = await res.json()
-        console.log(dataDB)
       } catch (error) {
         console.error(error)
       }
