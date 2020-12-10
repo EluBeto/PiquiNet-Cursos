@@ -2,19 +2,25 @@
   <form @submit.prevent="procesarForm">
     <Input :tarea="tarea"/>
   </form>
+  
   <hr>
-  {{ tarea }}
+
+  <ListaTareas />
+
 </template>
 
 <script>
 import Input from '../components/Input'
+import ListaTareas from '../components/ListaTareas'
 import { mapActions } from "vuex"
+
 const shortid = require('shortid')
 
 export default {
   name: 'Home',
   components: {
-    Input
+    Input,
+    ListaTareas
   },
   data() {
     return {
