@@ -8,6 +8,9 @@
 
 <script>
 import Input from '../components/Input'
+import { mapActions } from "vuex"
+const shortid = require('shortid')
+
 export default {
   name: 'Home',
   components: {
@@ -25,6 +28,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions(['setTareas']),
     procesarForm(){
       console.log(this.tarea)
       if (this.tarea.nombre.trim() === "") {
@@ -32,7 +36,15 @@ export default {
         return
       }
       console.log('Se guardo')
+      
+      //Generar ID
+      this.tarea.id = shortid.generate()
+      console.log(this.tarea.id)
+      // Enviar datos
+      this.setTareas(this.tarea)
+
       this.tarea = {
+        id: '',
         nombre: '',
         categorias: [],
         estado: '',
