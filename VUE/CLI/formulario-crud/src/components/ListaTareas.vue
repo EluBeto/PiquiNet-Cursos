@@ -25,9 +25,18 @@
       <td>{{ item.estado }}</td>
       <td>{{ item.numero }}</td>
       <td>
-          <button @click="deleteTareas(item.id)" class="btn btn-danger btn-sm">
+          <button @click="deleteTareas(item.id)" class="btn btn-danger btn-sm ml-2">
               Eliminar
           </button>
+          <router-link class="btn btn-warning btn-sm ml-2"
+                       :to="{
+                           name: 'Editar',
+                           params: {
+                               id: item.id
+                           }
+                       }">
+              Editar
+          </router-link>
       </td>
     </tr>
   </tbody>
