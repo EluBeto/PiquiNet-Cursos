@@ -1,8 +1,9 @@
 <template>
+  <h1>Formulario con VUE</h1>
   <form @submit.prevent="procesarForm">
     <Input :tarea="tarea"/>
   </form>
-  
+
   <hr>
 
   <ListaTareas />
