@@ -10,9 +10,13 @@ export default createStore({
       categorias: [],
       estado: '',
       numero: 0
-    }
+    },
+    user: null
   },
   mutations: {
+    setUser(state, payload){
+      state.user = payload
+    },
     cargar(state, payload){
       state.tareas = payload
     },
@@ -35,6 +39,23 @@ export default createStore({
     }
   },
   actions: {
+    async registrarUsuario({commit}, user){
+      try {
+        console.log(user)
+        const rest = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBQPcqQIZs8_DVyhgI7khMSYVng2pmhXJk', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+            returnSecureToken: true
+          })
+        })
+        const userDB = await rest.json()
+        console.log(userDB);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async cargarLocalstorage({commit}){
       try {
         const respuesta = await fetch('https://udemy-api-elu-default-rtdb.firebaseio.com/tareas.json')
