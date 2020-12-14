@@ -65,14 +65,31 @@ export default createStore({
       }
       commit('set', tarea)
     },
-    deleteTareas({commit}, id){
-      commit('eliminar', id)
+    async deleteTareas({commit}, id){
+      try {
+         await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${id}.json`, {
+          method: 'DELETE'
+        })
+        commit('eliminar', id)
+
+      } catch (error) {
+        console.error(error);
+      }
     },
     setTarea({commit}, id){
       commit('tarea', id)
     },
-    updateTarea({commit}, tarea){
-      commit('update', tarea)
+    async updateTarea({commit}, tarea){
+     try {
+       const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${tarea.id}.json`, {
+         method: 'PATCH',
+         body: JSON.stringify(tarea)
+       })
+       const dataDB = await res.json()
+       commit('update', tarea)
+     } catch (error) {
+       console.error(error);
+     }
     }
   },
   modules: {
