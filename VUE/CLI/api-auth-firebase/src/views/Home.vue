@@ -37,7 +37,6 @@ export default {
   methods:{
     ...mapActions(['setTareas', 'cargarLocalstorage']),
     procesarForm(){
-      console.log(this.tarea)
       if (this.tarea.nombre.trim() === "") {
         console.error('El campo esta vacio')
         return
@@ -46,7 +45,7 @@ export default {
       
       //Generar ID
       this.tarea.id = shortid.generate()
-      console.log(this.tarea.id)
+      
       // Enviar datos
       this.setTareas(this.tarea)
 

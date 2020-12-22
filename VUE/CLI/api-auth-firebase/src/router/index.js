@@ -32,7 +32,6 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  console.log(to.meta.rutaProtegida)
   if (to.meta.rutaProtegida) {
     if (store.getters.usuarioAutenticado) {
       next()

@@ -42,10 +42,10 @@ export default createStore({
     serrarSesion({ commit }){
       commit('setUser', null)
       router.push('/Login')
+      localStorage.removeItem('usuario')
     },
     async loginUsuario({ commit }, usaurio){
       try {
-        console.log(usaurio)
         const rest = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBQPcqQIZs8_DVyhgI7khMSYVng2pmhXJk', {
           method: 'POST',
           body: JSON.stringify({
@@ -54,20 +54,21 @@ export default createStore({
             returnSecureToken: true
           })
         })
+
         const userDB = await rest.json()
         if (userDB.error) {
          return console.error(userDB) 
         }
-        console.log(userDB)
         commit('setUser', userDB)
         router.push('/')
+        localStorage.setItem('usuario', JSON.stringify(userDB))
+
       } catch (error) {
         console.error(error)
       }
     },
     async registrarUsuario({commit}, user){
       try {
-        console.log(user)
         const rest = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBQPcqQIZs8_DVyhgI7khMSYVng2pmhXJk', {
           method: 'POST',
           body: JSON.stringify({
@@ -83,11 +84,18 @@ export default createStore({
         }
         commit('setUser', userDB)
         router.push('/Login')
+        localStorage.setItem('usuario', JSON.stringify(userDB))
+
       } catch (error) {
         console.error(error);
       }
     },
     async cargarLocalstorage({ commit, state }){
+      if (localStorage.getItem('usuario')) {
+        commit('setUser', JSON.parse(localStorage.getItem('usuario')))
+      } else {
+        return commit('setUser', null)
+      }
       try {
         const respuesta = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}.json?auth=${state.user.idToken}`)
         const dataDB = await respuesta.json()
@@ -129,7 +137,6 @@ export default createStore({
       }
     },
     setTarea({commit}, id){
-      console.log(id)
       commit('tarea', id)
     },
     async updateTarea({ commit, state }, tarea){
