@@ -83,9 +83,9 @@ export default createStore({
         console.error(error);
       }
     },
-    async cargarLocalstorage({commit}){
+    async cargarLocalstorage({ commit, state }){
       try {
-        const respuesta = await fetch('https://udemy-api-elu-default-rtdb.firebaseio.com/tareas.json')
+        const respuesta = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}.json?auth=${state.user.idToken}`)
         const dataDB = await respuesta.json()
         const arrayTareas = []
 
@@ -97,9 +97,9 @@ export default createStore({
         console.error(error)
       }
     },
-    async setTareas({commit}, tarea){
+    async setTareas({ commit, state }, tarea){
       try {
-        const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${tarea.id}.json`, {
+        const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
           method:'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -113,9 +113,9 @@ export default createStore({
       }
       commit('set', tarea)
     },
-    async deleteTareas({commit}, id){
+    async deleteTareas({ commit, state }, id){
       try {
-         await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${id}.json`, {
+         await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${id}.json?auth=${state.user.idToken}`, {
           method: 'DELETE'
         })
         commit('eliminar', id)
@@ -128,9 +128,9 @@ export default createStore({
       console.log(id)
       commit('tarea', id)
     },
-    async updateTarea({commit}, tarea){
+    async updateTarea({ commit, state }, tarea){
      try {
-       const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${tarea.id}.json`, {
+       const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
          method: 'PATCH',
          body: JSON.stringify(tarea)
        })

@@ -35,7 +35,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['setTareas']),
+    ...mapActions(['setTareas', 'cargarLocalstorage']),
     procesarForm(){
       console.log(this.tarea)
       if (this.tarea.nombre.trim() === "") {
@@ -58,6 +58,9 @@ export default {
         numero: 0
       }
     }
+  },
+  created(){
+    this.cargarLocalstorage()
   }
 }
 </script>
