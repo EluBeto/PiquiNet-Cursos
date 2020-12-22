@@ -51,7 +51,11 @@ export default createStore({
           })
         })
         const userDB = await rest.json()
-        console.log(userDB);
+        if (userDB.error) {
+          console.error(userDB.error)
+          return
+        }
+        commit('setUser', userDB)
       } catch (error) {
         console.error(error);
       }
@@ -98,6 +102,7 @@ export default createStore({
       }
     },
     setTarea({commit}, id){
+      console.log(id)
       commit('tarea', id)
     },
     async updateTarea({commit}, tarea){
