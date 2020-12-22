@@ -28,6 +28,7 @@
           <button
             class="btn btn-dark"
             v-if="usuarioAutenticado"
+            @click="serrarSesion"
           >
             Cerrar Sesión
           </button>
@@ -36,10 +37,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['usuarioAutenticado'])
+  },
+  methods: {
+    ...mapActions(['serrarSesion'])
   }
 }
 </script>

@@ -39,6 +39,10 @@ export default createStore({
     }
   },
   actions: {
+    serrarSesion({ commit }){
+      commit('setUser', null)
+      router.push('/Login')
+    },
     async loginUsuario({ commit }, usaurio){
       try {
         console.log(usaurio)
