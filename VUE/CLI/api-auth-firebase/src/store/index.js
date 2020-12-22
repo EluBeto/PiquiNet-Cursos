@@ -39,6 +39,28 @@ export default createStore({
     }
   },
   actions: {
+    async loginUsuario({ commit }, usaurio){
+      try {
+        console.log(usaurio)
+        const rest = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBQPcqQIZs8_DVyhgI7khMSYVng2pmhXJk', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: usaurio.email,
+            password: usaurio.password,
+            returnSecureToken: true
+          })
+        })
+        const userDB = await rest.json()
+        if (userDB.error) {
+         return console.error(userDB) 
+        }
+        console.log(userDB)
+        commit('setUser', userDB)
+        router.push('/')
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async registrarUsuario({commit}, user){
       try {
         console.log(user)
@@ -56,6 +78,7 @@ export default createStore({
           return
         }
         commit('setUser', userDB)
+        router.push('/Login')
       } catch (error) {
         console.error(error);
       }
