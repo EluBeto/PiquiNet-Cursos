@@ -41,11 +41,10 @@ export default {
         console.error('El campo esta vacio')
         return
       }
-      console.log('Se guardo')
-      
+            
       //Generar ID
       this.tarea.id = shortid.generate()
-      
+
       // Enviar datos
       this.setTareas(this.tarea)
 

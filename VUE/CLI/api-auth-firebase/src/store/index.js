@@ -111,7 +111,7 @@ export default createStore({
     },
     async setTareas({ commit, state }, tarea){
       try {
-        const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
+        await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
           method:'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -119,11 +119,10 @@ export default createStore({
           body: JSON.stringify(tarea)
         })
 
-        const dataDB = await res.json()
+        commit('set', tarea)
       } catch (error) {
         console.error(error)
       }
-      commit('set', tarea)
     },
     async deleteTareas({ commit, state }, id){
       try {
@@ -141,13 +140,16 @@ export default createStore({
     },
     async updateTarea({ commit, state }, tarea){
      try {
-       const res = await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
-         method: 'PATCH',
-         body: JSON.stringify(tarea)
-       })
-       const dataDB = await res.json()
+        await fetch(`https://udemy-api-elu-default-rtdb.firebaseio.com/tareas/${state.user.localId}/${tarea.id}.json?auth=${state.user.idToken}`, {
+          method:'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(tarea)
+        })
        commit('update', tarea)
      } catch (error) {
+       console.error('Valio:');
        console.error(error);
      }
     }
