@@ -8,12 +8,16 @@
   class="btn btn-danger"
    @click="disminuir"
   >-</button>
+  <hr>
+  <input type="text" class="form-control" v-model="texto">
+  <p>{{texto}}</p>
 </template>
 <script>
 import { computed, ref } from 'vue'
 export default {
   setup() {
     const contador = ref(0)
+    const texto = ref('')
 
     const aumentar = () => {
       contador.value ++
@@ -30,9 +34,10 @@ export default {
         return 'blue'
       }
     })
-    
+
     return {
       contador,
+      texto,
       aumentar,
       disminuir,
       cambiaColor
