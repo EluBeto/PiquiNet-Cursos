@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <h1>Contador: {{ contador }}</h1>
+    <h1
+     :style="{'color': cambiaColor}"
+    >Contador: {{ contador }}</h1>
     <hr>
     <button class="btn btn-success"
       @click="suma"
@@ -22,6 +24,15 @@ export default {
   data() {
     return {
       contador: 0
+    }
+  },
+  computed: {
+    cambiaColor() {
+      if (this.contador <= 0) {
+        return 'red'
+      } else {
+        return 'blue'
+      }
     }
   },
   methods: {
