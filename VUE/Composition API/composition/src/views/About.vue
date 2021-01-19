@@ -4,11 +4,20 @@
     <!-- <h1 :style="{'color' : cambiaColor}">Contador: {{ contador }}</h1> -->
   </div>
   <hr>
-  <button class="btn btn-success" @click="aumentar" >+</button>
-  <button
-  class="btn btn-danger"
-   @click="disminuir"
-  >-</button>
+    <!-- <button 
+        class="btn btn-success"
+        @click="aumentar"
+    >
+      +
+    </button>
+    <button
+      class="btn btn-danger"
+      @click="disminuir"
+    >
+      -
+    </button> -->
+    <Btn :textoBoton="'Autmentar'" @accion="aumentar"/>
+    <Btn :textoBoton="'Disminuir'" @accion="disminuir" />
   <hr>
   <input type="text" class="form-control" v-model="texto">
   <p>{{texto}}</p>
@@ -16,9 +25,11 @@
 <script>
 import { computed, ref } from 'vue'
 import Titulo from '../components/Titulo'
+import Btn from '../components/Btn'
 export default {
   components: {
-    Titulo
+    Titulo,
+    Btn
   },
   setup() {
     const contador = ref(0)
