@@ -1,6 +1,7 @@
 <template>
   <div class="about">
-    <h1 :style="{'color' : cambiaColor}">Contador: {{ contador }}</h1>
+    <Titulo :contador="contador" :cambiaColor="cambiaColor" />
+    <!-- <h1 :style="{'color' : cambiaColor}">Contador: {{ contador }}</h1> -->
   </div>
   <hr>
   <button class="btn btn-success" @click="aumentar" >+</button>
@@ -14,7 +15,11 @@
 </template>
 <script>
 import { computed, ref } from 'vue'
+import Titulo from '../components/Titulo'
 export default {
+  components: {
+    Titulo
+  },
   setup() {
     const contador = ref(0)
     const texto = ref('')
