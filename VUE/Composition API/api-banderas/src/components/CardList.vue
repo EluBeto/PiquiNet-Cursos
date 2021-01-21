@@ -25,7 +25,7 @@ export default {
 
         onMounted(async () => {
             await store.dispatch('getPaises')
-            await store.dispatch('filtraRegion', 'Americas')
+            await store.dispatch('filtraRegion', '')
         })
 
         return { paises }
