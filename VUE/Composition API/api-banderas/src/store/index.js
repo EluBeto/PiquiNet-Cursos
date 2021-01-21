@@ -22,11 +22,17 @@ export default createStore({
       } catch (error) {
         console.error(error)
       }
+    },
+    filtraRegion({ commit, state }, region) {
+      const filterPaises = state.paises.filter(pais => 
+        pais.region.includes(region)
+      )
+      commit('setPaisesFiltrados', filterPaises)
     }
   },
   getters: {
     topPaisesPoblacion(state) {
-      return state.paises.sort((a, b) => a.population < b.population ? 1 : -1 )
+      return state.paisesFiltrados.sort((a, b) => a.population < b.population ? 1 : -1 )
     }
   },
   modules: {
