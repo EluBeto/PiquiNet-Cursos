@@ -16,7 +16,7 @@ export default createStore({
   actions: {
     async getPaises({ commit }) {
       try {
-        const responsePaises = await fetch('api.json')
+        const responsePaises = await fetch('https://restcountries.eu/rest/v2/all')
         const data = await responsePaises.json()
         commit('setPaises', data)
       } catch (error) {
